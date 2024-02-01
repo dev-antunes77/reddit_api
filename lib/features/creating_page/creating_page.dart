@@ -1,3 +1,4 @@
+import 'package:api_mock/app/app_cubit.dart';
 import 'package:api_mock/core/models/post_item.dart';
 import 'package:api_mock/features/creating_page/cubit/creating_cubit.dart';
 import 'package:api_mock/features/creating_page/parts/creating_content.dart';
@@ -25,10 +26,7 @@ class _CreatingPageState extends State<CreatingPage> {
           listenWhen: (previous, current) => previous != current,
           listener: (context, state) {
             if (state is CreatingSuccessState) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                  (route) => false);
+              context.read<AppCubit>().navigatePage(0);
             } else if (state is CreatingErrorState) {
               CustomErrorSnackbar.showErrorSnackbar(context, 'error');
             }

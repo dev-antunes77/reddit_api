@@ -1,12 +1,13 @@
+import 'package:api_mock/app/app_cubit.dart';
 import 'package:api_mock/core/extensions/string_extensions.dart';
+import 'package:api_mock/core/l10n/generated/l10n.dart';
 import 'package:api_mock/core/models/post_item.dart';
 import 'package:api_mock/core/theme/text_styles_data.dart';
-import 'package:api_mock/features/creating_page/creating_page.dart';
 import 'package:api_mock/features/home_page/cubit/home_cubit.dart';
 import 'package:api_mock/features/home_page/widgets/list_item_tile_info.dart';
 import 'package:api_mock/features/home_page/widgets/thin_vertical_divider.dart';
 import 'package:api_mock/utils/app_utils.dart';
-import 'package:api_mock/widgets/page_animator.dart';
+import 'package:api_mock/utils/call_simple_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -82,7 +83,7 @@ class PostItemCard extends StatelessWidget {
                     top: 0,
                     right: 0,
                     child: GestureDetector(
-                      onTap: () => callSimpleDisplayDialog(context, postItem),
+                      onTap: () => _callEditiOrDeleteDialog(context, postItem),
                       child: const DecoratedBox(
                         decoration: BoxDecoration(
                           color: Colors.white24,
@@ -108,44 +109,26 @@ class PostItemCard extends StatelessWidget {
   }
 }
 
-Future<dynamic> callSimpleDisplayDialog(BuildContext context, PostItem item) {
-  return showDialog(
-    context: context,
-    builder: ((context) => AlertDialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-              side: const BorderSide(color: Colors.white38, width: 1)),
-          content: Text(
-            'Options',
-            style: TextStyleData.title,
-          ),
-          actions: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    Navigator.of(context).push(
-                      PageAnimator(
-                        child: CreatingPage(
-                          item: item,
-                          isEdidtion: true,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Text('Edit'),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      context.read<HomeCubit>().delete(item.id);
-                    },
-                    child: Text('Delete')),
-              ],
-            )
-          ],
-        )),
-  );
-}
+Future<dynamic> _callEditiOrDeleteDialog(BuildContext context, PostItem item) =>
+    callSimpleDisplayDialog(
+      context,
+      content: Text(
+        AppLocalizations.current.options,
+        style: TextStyleData.title,
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.pop(context);
+            context.read<AppCubit>().navigatePage(1);
+          },
+          child: Text(AppLocalizations.current.edid),
+        ),
+        TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              context.read<HomeCubit>().delete(item.id);
+            },
+            child: Text(AppLocalizations.current.delete)),
+      ],
+    );

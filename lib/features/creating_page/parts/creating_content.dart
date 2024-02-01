@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:api_mock/core/l10n/generated/l10n.dart';
 import 'package:api_mock/core/theme/app_colors.dart';
 import 'package:api_mock/features/creating_page/cubit/creating_cubit.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +26,6 @@ class CreatingContent extends StatefulWidget {
 class _CreatingPageState extends State<CreatingContent> {
   late final CreatingCubit creatingCubit;
   String authInitialValue = '';
-  // late final String titleInitialValue;
   @override
   void initState() {
     creatingCubit = context.read<CreatingCubit>();
@@ -40,18 +40,22 @@ class _CreatingPageState extends State<CreatingContent> {
 
   bool get isCreating => widget.item?.id.isEmpty ?? true;
 
+  void _constantCheckKeyBoard() => setState(
+      () => isKeyboardActive = MediaQuery.of(context).viewInsets.bottom > 0);
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     bool isKeyboardActive = mediaQuery.viewInsets.bottom > 0;
     final spacer =
         SizedBox(height: isKeyboardActive ? 6 : mediaQuery.size.height * 0.12);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          widget.isEdidtion ? 'Editing' : 'Add to list',
+          widget.isEdidtion
+              ? AppLocalizations.current.editing
+              : AppLocalizations.current.addToList,
           style: TextStyleData.title,
         ),
       ),
@@ -61,15 +65,18 @@ class _CreatingPageState extends State<CreatingContent> {
             children: [
               spacer,
               CreationForm(
-                label: 'Author',
-                // textCtrl: isCreating ? authorCtrl : null,
-                initialValue: widget.item?.author,
-                onChanged: (value) => creatingCubit.onChangeItemAuthor(value),
-                // onChanged: (value) => setState(() => authorCtrl.text = value),
-              ),
+                  label: AppLocalizations.current.author,
+                  // textCtrl: isCreating ? authorCtrl : null,
+                  initialValue: widget.item?.author,
+                  onChanged: (value) {
+                    creatingCubit.onChangeItemAuthor(value);
+                    _constantCheckKeyBoard();
+                  }
+                  // onChanged: (value) => setState(() => authorCtrl.text = value),
+                  ),
               const SizedBox(height: 20),
               CreationForm(
-                label: 'Title',
+                label: AppLocalizations.current.title,
                 // textCtrl: titleCtrl,
                 initialValue: creatingCubit.state.item.title,
 
@@ -78,7 +85,7 @@ class _CreatingPageState extends State<CreatingContent> {
               ),
               const SizedBox(height: 20),
               CreationForm(
-                label: 'Comments',
+                label: AppLocalizations.current.comment,
                 // textCtrl: titleCtrl,
                 initialValue:
                     creatingCubit.state.item.commentsQuantity.toString(),
@@ -89,7 +96,7 @@ class _CreatingPageState extends State<CreatingContent> {
               ),
               const SizedBox(height: 20),
               CreationForm(
-                label: 'Ups',
+                label: AppLocalizations.current.ups,
                 // textCtrl: titleCtrl,
                 initialValue: creatingCubit.state.item.ups.toString(),
                 keyboardType: TextInputType.number,
@@ -118,7 +125,7 @@ class _CreatingPageState extends State<CreatingContent> {
                       size: widget.isEdidtion ? 20 : 40,
                       color: creatingCubit.validToProceed
                           ? AppColors.primaryLight
-                          : AppColors.inactiveColor,
+                          : AppColors.primaryLight.withOpacity(0.5),
                     ),
                   ),
                 ),

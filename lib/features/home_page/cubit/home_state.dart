@@ -21,12 +21,3 @@ final class HomeErrorState extends HomeState {
 final class HomeLoadingState extends HomeState {
   HomeLoadingState({super.posts = const []});
 }
-
-// final class HomeCreatingLoadingState extends HomeState {
-//   HomeCreatingLoadingState(this.postItem, {super.posts = const []});
-
-//   final PostItem postItem; 
-//   @override
-//   List<Object?> get props => [postItem];
-  
-// }

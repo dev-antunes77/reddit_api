@@ -1,0 +1,29 @@
+{
+    "home":"Início",
+    "settings":"Configurações",
+    "yourFeed":"Sua lista",
+    "editing":"Edição",
+    "edid":"Editar",
+    "delete":"Deletar",
+    "addToList":"Adicionar à lista",
+    "author":"Autor",
+    "title":"Título",
+    "comment":"Número de comentários",
+    "ups":"Número de ups",
+    "options":"Opções",
+    "error":"Erro",
+    "selectYourLanguage":"Selecione seu idioma",
+    "portuguese":"Português",
+    "english":"Inglês",
+    "setLanguageConfimation":"Tem certeza que deseja alterar o idioma para {language}",
+    "@setLanguageConfimation":{
+        "placeholders": {
+            "language": {
+              "type": "String"
+            }
+    }
+},
+"takePicture":"Tirar foto",
+"yes":"Sim",
+"no":"Não"
+}

@@ -1,0 +1,29 @@
+{
+    "home":"Home",
+    "settings":"Settings",
+    "yourFeed":"Your feed",
+    "editing":"Editing",
+    "edid":"Edit",
+    "delete":"Delete",
+    "addToList":"Add to list",
+    "author":"Author",
+    "title":"Title",
+    "comment":"Number of comments",
+    "ups":"number of ups",
+    "options":"Options",
+    "error":"Error",
+    "selectYourLanguage":"Select your language",
+    "portuguese":"Portuguese",
+    "english":"English",
+    "setLanguageConfimation":"Are you sure you want to set language to {language}",
+    "@setLanguageConfimation":{
+        "placeholders": {
+            "language": {
+              "type": "String"
+            }
+    }
+},
+"takePicture":"Take a picture",
+"yes":"Yes",
+"no":"No"
+}
