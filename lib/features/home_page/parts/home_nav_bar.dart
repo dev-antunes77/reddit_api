@@ -1,3 +1,4 @@
+import 'package:api_mock/core/l10n/generated/l10n.dart';
 import 'package:api_mock/core/theme/icon_theme_data.dart';
 import 'package:flutter/material.dart';
 
@@ -24,20 +25,27 @@ class HomeNavBar extends StatelessWidget {
       backgroundColor: Colors.grey[800],
       currentIndex: currentIndex,
       onTap: (index) => onTap(index),
-      items: const [
+      items: [
         BottomNavigationBarItem(
-          icon: Icon(
+          icon: const Icon(
             Icons.home,
             size: 26,
           ),
-          label: 'Home',
+          label: AppLocalizations.current.home,
         ),
         BottomNavigationBarItem(
-          icon: Icon(
+          icon: const Icon(
+            Icons.edit,
+            size: 26,
+          ),
+          label: AppLocalizations.current.editing,
+        ),
+        BottomNavigationBarItem(
+          icon: const Icon(
             Icons.settings,
             size: 26,
           ),
-          label: 'Settings',
+          label: AppLocalizations.current.settings,
         ),
       ],
     );

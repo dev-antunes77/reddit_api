@@ -1,9 +1,7 @@
+import 'package:api_mock/core/l10n/generated/l10n.dart';
+import 'package:api_mock/core/theme/app_colors.dart';
 import 'package:api_mock/features/home_page/cubit/home_cubit.dart';
-import 'package:api_mock/features/home_page/parts/add_new_item_action_button.dart';
 import 'package:api_mock/features/home_page/parts/home_page_content.dart';
-import 'package:api_mock/features/home_page/parts/home_nav_bar.dart';
-import 'package:api_mock/features/home_page/parts/home_scaffold.dart';
-import 'package:api_mock/features/settings_page/settings_page.dart';
 import 'package:api_mock/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,15 +21,14 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<HomeCubit, HomeState>(
       listenWhen: (previous, current) => previous != current,
       listener: (context, state) {
         if (state is HomeErrorState) {
-          CustomErrorSnackbar.showErrorSnackbar(context, 'Error');
+          CustomErrorSnackbar.showErrorSnackbar(
+              context, AppLocalizations.current.error);
         }
       },
       child: BlocBuilder<HomeCubit, HomeState>(
@@ -40,27 +37,10 @@ class _HomePageState extends State<HomePage> {
             return const CustomLoadingSpinner();
           }
 
-          return HomeScaffold(
-            floatingActionButton: _currentIndex == 0
-                ? const AddNewItemActionButton()
-                : const SizedBox.shrink(),
-            bottomNavigationBar: HomeNavBar(
-              currentIndex: _currentIndex,
-              onTap: (index) => setState(() => _currentIndex = index),
-            ),
-            child: _returnProperPage(_currentIndex, state),
-          );
+          return HomePageContent(state);
         },
       ),
     );
-  }
-
-  Widget _returnProperPage(int index, HomeState state) {
-    final List<Widget> pages = [
-      HomePageContent(state),
-      const SettingsPage(),
-    ];
-    return pages[index];
   }
 }
 
@@ -70,11 +50,11 @@ class CustomErrorSnackbar {
       SnackBar(
         content: Row(
           children: [
-            Icon(Icons.error, color: Colors.white),
-            SizedBox(width: 8),
+            const Icon(Icons.error, color: AppColors.primaryLight),
+            const SizedBox(width: 8),
             Text(
               errorMessage,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: AppColors.primaryLight),
             ),
           ],
         ),
